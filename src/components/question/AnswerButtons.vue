@@ -41,15 +41,17 @@ function handleCorrectClick() {
 <style scoped>
 .answer-buttons {
   width: 100%;
-  padding: 1rem;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .buttons-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  max-width: 400px;
-  margin: 0 auto;
+  display: flex;
+  gap: 4rem;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Mobile responsiveness */

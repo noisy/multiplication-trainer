@@ -8,7 +8,7 @@
   >
     <!-- X Icon -->
     <svg
-      class="w-8 h-8"
+      class="w-16 h-16"
       fill="none"
       stroke="currentColor"
       viewBox="0 0 24 24"
@@ -41,15 +41,16 @@ const emit = defineEmits<{
 
 const buttonClasses = computed(() => [
   'flex items-center justify-center',
-  'w-20 h-20',
+  'w-32 h-32',
   'text-white font-semibold',
-  'rounded-xl',
+  'rounded-3xl',
   'transition-all duration-200',
   'touch-manipulation',
-  'shadow-lg',
+  'shadow-xl',
+  'border-4',
   props.disabled
-    ? 'bg-gray-400 cursor-not-allowed opacity-50'
-    : 'bg-red-500 hover:bg-red-600 active:bg-red-700 hover:shadow-xl active:scale-95'
+    ? 'cursor-not-allowed opacity-50'
+    : 'hover:shadow-2xl active:scale-90'
 ])
 
 function handleClick() {
@@ -60,12 +61,24 @@ function handleClick() {
 </script>
 
 <style scoped>
-/* Additional mobile-specific styles */
-@media (max-width: 640px) {
-  button {
-    font-size: 1.125rem;
-    padding: 1rem 1.5rem;
-  }
+button {
+  background-color: #ef4444 !important; /* red-500 */
+  border-color: #dc2626 !important; /* red-600 */
+}
+
+button:hover {
+  background-color: #dc2626 !important; /* red-600 */
+  border-color: #b91c1c !important; /* red-700 */
+}
+
+button:active {
+  background-color: #b91c1c !important; /* red-700 */
+}
+
+button:disabled {
+  background-color: #9ca3af !important; /* gray-400 */
+  border-color: #9ca3af !important; /* gray-400 */
+  transform: none !important;
 }
 
 /* Focus styles for accessibility */
