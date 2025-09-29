@@ -19,10 +19,11 @@ describe('constants', () => {
 
   it('should have all performance colors defined', () => {
     expect(PERFORMANCE_COLORS.GREY).toBe('#9ca3af')
-    expect(PERFORMANCE_COLORS.GREEN).toBe('#10b981')
-    expect(PERFORMANCE_COLORS.LIME).toBe('#84cc16')
-    expect(PERFORMANCE_COLORS.YELLOW).toBe('#eab308')
-    expect(PERFORMANCE_COLORS.ORANGE).toBe('#f97316')
+    expect(PERFORMANCE_COLORS.GREEN).toBe('#54c73a')
+    expect(PERFORMANCE_COLORS.EMERALD).toBe('#77c71a')
+    expect(PERFORMANCE_COLORS.LIME).toBe('#abd216')
+    expect(PERFORMANCE_COLORS.YELLOW).toBe('#ccce0f')
+    expect(PERFORMANCE_COLORS.ORANGE).toBe('#f0f200')
     expect(PERFORMANCE_COLORS.RED).toBe('#ef4444')
   })
 
