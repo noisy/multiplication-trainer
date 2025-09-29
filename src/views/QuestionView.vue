@@ -86,6 +86,7 @@ function handleAnswer(payload: { correct: boolean }) {
 <style scoped>
 .question-view {
   min-height: 100vh;
+  min-width: 400px;
   display: flex;
   flex-direction: column;
   background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
