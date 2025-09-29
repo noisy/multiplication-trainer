@@ -45,23 +45,32 @@ const lessonProgress = computed(() => store.getLessonProgress)
 // Get question history for current question
 const questionHistory = computed(() => {
   if (!currentQuestion.value) return []
-  
+
   const stats = store.getQuestionStats(currentQuestion.value.n, currentQuestion.value.m)
   if (!stats) return []
-  
-  // Convert times array to history format
+
+  // Use chronological history if available, otherwise fall back to old method
+  if (stats.history && stats.history.length > 0) {
+    // Return last 5 attempts from chronological history
+    return stats.history.slice(-5).map(attempt => ({
+      type: attempt.type,
+      time: attempt.time
+    }))
+  }
+
+  // Fallback for old data format (backward compatibility)
   const history: Array<{ type: 'correct' | 'wrong', time: number | null }> = []
-  
+
   // Add correct answers (with times)
   stats.times.forEach(time => {
     history.push({ type: 'correct', time })
   })
-  
+
   // Add wrong answers (without times)
   for (let i = 0; i < stats.wrongCount; i++) {
     history.push({ type: 'wrong', time: null })
   }
-  
+
   // Return last 5 attempts only
   return history.slice(-5)
 })

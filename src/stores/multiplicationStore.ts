@@ -9,10 +9,11 @@ import {
   LESSON_CONFIG,
   TIMER_INTERVAL
 } from '../utils/constants'
-import { 
-  saveToLocalStorage, 
-  loadFromLocalStorage, 
-  type QuestionStats 
+import {
+  saveToLocalStorage,
+  loadFromLocalStorage,
+  type QuestionStats,
+  type HistoryAttempt
 } from '../utils/storage'
 
 export interface Question {
@@ -64,7 +65,7 @@ export const useMultiplicationStore = defineStore('multiplication', () => {
 
   function getQuestionStats(n: number, m: number): QuestionStats {
     const key = formatQuestionKey(n, m)
-    return stats.value[key] || { times: [], wrongCount: 0, asked: false }
+    return stats.value[key] || { times: [], wrongCount: 0, asked: false, history: [] }
   }
 
   function getAverageTime(n: number, m: number): number | null {
@@ -152,7 +153,7 @@ export const useMultiplicationStore = defineStore('multiplication', () => {
       for (let m = MULTIPLICATION_RANGE.MIN; m <= MULTIPLICATION_RANGE.MAX; m++) {
         const key = formatQuestionKey(n, m)
         if (!stats.value[key]) {
-          stats.value[key] = { times: [], wrongCount: 0, asked: false }
+          stats.value[key] = { times: [], wrongCount: 0, asked: false, history: [] }
         }
       }
     }
@@ -238,11 +239,29 @@ export const useMultiplicationStore = defineStore('multiplication', () => {
 
     // Initialize stats if not exists
     if (!stats.value[key]) {
-      stats.value[key] = { times: [], wrongCount: 0, asked: false }
+      stats.value[key] = { times: [], wrongCount: 0, asked: false, history: [] }
     }
 
     // Mark as asked
     stats.value[key].asked = true
+
+    // Ensure history array exists (for backward compatibility)
+    if (!stats.value[key].history) {
+      stats.value[key].history = []
+    }
+
+    // Add to chronological history
+    const historyAttempt: HistoryAttempt = {
+      type: correct ? 'correct' : 'wrong',
+      time: correct ? timeSpent : null,
+      timestamp: Date.now()
+    }
+    stats.value[key].history!.push(historyAttempt)
+
+    // Keep only last 10 history entries to prevent unlimited growth
+    if (stats.value[key].history!.length > 10) {
+      stats.value[key].history = stats.value[key].history!.slice(-10)
+    }
 
     if (correct) {
       // Add time to array, keep only last MAX_STORED_TIMES

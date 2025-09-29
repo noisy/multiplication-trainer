@@ -45,7 +45,7 @@ describe('StatusCircle', () => {
       props: { avgTime: 3.7, displayMode: 'time' }
     })
     
-    expect(wrapper.text()).toBe('4') // rounded
+    expect(wrapper.text()).toBe('4s') // rounded with suffix
   })
 
   it('should display X symbol in wrong mode', () => {

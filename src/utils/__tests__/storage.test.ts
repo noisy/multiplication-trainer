@@ -20,8 +20,8 @@ describe('storage', () => {
   describe('saveToLocalStorage', () => {
     it('should save stats to localStorage with correct format', () => {
       const stats: Record<string, QuestionStats> = {
-        '2x2': { times: [3.2, 2.8], wrongCount: 1, asked: true },
-        '3x4': { times: [], wrongCount: 0, asked: false }
+        '2x2': { times: [3.2, 2.8], wrongCount: 1, asked: true, history: [] },
+        '3x4': { times: [], wrongCount: 0, asked: false, history: [] }
       }
 
       saveToLocalStorage(stats)
@@ -48,7 +48,7 @@ describe('storage', () => {
       const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
       
       const stats: Record<string, QuestionStats> = {
-        '2x2': { times: [3.2], wrongCount: 0, asked: true }
+        '2x2': { times: [3.2], wrongCount: 0, asked: true, history: [] }
       }
 
       expect(() => saveToLocalStorage(stats)).not.toThrow()
@@ -73,7 +73,7 @@ describe('storage', () => {
         version: 1,
         lastUpdated: '2023-01-01T00:00:00.000Z',
         stats: {
-          '2x2': { times: [3.2, 2.8], wrongCount: 1, asked: true }
+          '2x2': { times: [3.2, 2.8], wrongCount: 1, asked: true, history: [] }
         }
       }
       

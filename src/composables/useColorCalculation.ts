@@ -29,7 +29,7 @@ export function useColorCalculation() {
   }
 
   function formatTime(seconds: number): string {
-    return Math.round(seconds).toString()
+    return Math.round(seconds).toString() + 's'
   }
 
   function getColorName(color: string): string {

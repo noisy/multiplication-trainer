@@ -6,10 +6,17 @@ export interface StorageData {
   stats: Record<string, QuestionStats>
 }
 
+export interface HistoryAttempt {
+  type: 'correct' | 'wrong'
+  time: number | null
+  timestamp: number
+}
+
 export interface QuestionStats {
   times: number[]
   wrongCount: number
   asked: boolean
+  history?: HistoryAttempt[] // New chronological history
 }
 
 /**
