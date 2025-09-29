@@ -11,11 +11,11 @@ export const TIME_THRESHOLDS = {
 // Performance colors
 export const PERFORMANCE_COLORS = {
   GREY: '#9ca3af',      // Not attempted
-  GREEN: '#54c73a',     // 0-3s - Excellent (84,199,58)
-  EMERALD: '#77c71a',   // 3-6s - Great! (119,199,26)
-  LIME: '#abd216',      // 6-10s - Good (171,210,22)
-  YELLOW: '#ccce0f',    // 10-15s - Ok (204,206,15)
-  ORANGE: '#f0f200',    // 15+s - Slow (240,242,0)
+  GREEN: '#3FCE95',     // 0-3s - Excellent
+  EMERALD: '#6FD17C',   // 3-6s - Great!
+  LIME: '#9FD463',      // 6-10s - Good
+  YELLOW: '#CFD649',    // 10-15s - Ok
+  ORANGE: '#FFD930',    // 15+s - Slow
   RED: '#ef4444',       // Wrong answers
 } as const
 

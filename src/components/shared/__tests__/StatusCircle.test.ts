@@ -37,7 +37,7 @@ describe('StatusCircle', () => {
     })
     
     const element = wrapper.find('.status-circle').element as HTMLElement
-    expect(element.style.backgroundColor).toBe('rgb(84, 199, 58)') // green
+    expect(element.style.backgroundColor).toBe('rgb(63, 206, 149)') // green #3FCE95
   })
 
   it('should display formatted time in time mode', () => {
