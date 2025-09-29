@@ -41,12 +41,11 @@ const emit = defineEmits<{
 
 const buttonClasses = computed(() => [
   'flex items-center justify-center',
-  'px-6 py-4',
+  'w-20 h-20',
   'text-white font-semibold',
-  'rounded-lg',
+  'rounded-xl',
   'transition-all duration-200',
   'touch-manipulation',
-  'min-h-[56px]', // Minimum touch target
   'shadow-lg',
   props.disabled
     ? 'bg-gray-400 cursor-not-allowed opacity-50'

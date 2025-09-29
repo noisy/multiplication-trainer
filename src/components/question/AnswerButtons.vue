@@ -47,8 +47,8 @@ function handleCorrectClick() {
 .buttons-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  max-width: 600px;
+  gap: 2rem;
+  max-width: 400px;
   margin: 0 auto;
 }
 

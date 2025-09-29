@@ -1,5 +1,5 @@
 <template>
-  <div class="app-card p-4">
+  <div class="app-card py-2">
     <div class="grid-container">
       <!-- Grid with headers -->
       <div 

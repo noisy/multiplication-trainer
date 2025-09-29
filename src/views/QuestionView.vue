@@ -16,15 +16,15 @@
         :elapsed-time="elapsedTime"
         :history="questionHistory"
       />
-    </main>
 
-    <!-- Bottom Buttons -->
-    <footer class="question-footer">
-      <AnswerButtons
-        :disabled="!currentQuestion"
-        @answer="handleAnswer"
-      />
-    </footer>
+      <!-- Answer Buttons - moved up from footer -->
+      <div class="answer-section">
+        <AnswerButtons
+          :disabled="!currentQuestion"
+          @answer="handleAnswer"
+        />
+      </div>
+    </main>
   </div>
 </template>
 
@@ -99,11 +99,12 @@ function handleAnswer(payload: { correct: boolean }) {
   min-height: 0; /* Allow flex shrinking */
 }
 
-.question-footer {
+.answer-section {
   flex-shrink: 0;
-  background-color: white;
-  border-top: 1px solid #e5e7eb; /* gray-200 */
-  box-shadow: 0 -1px 3px 0 rgba(0, 0, 0, 0.1);
+  padding: 2rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Ensure proper mobile layout */

@@ -1,5 +1,5 @@
 <template>
-  <div class="app-card p-4">
+  <div class="app-card p-2">
     <h3 class="text-lg font-semibold text-gray-800 mb-3">Performance Legend</h3>
     <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
       <LegendItem

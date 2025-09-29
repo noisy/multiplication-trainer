@@ -1,17 +1,17 @@
 <template>
   <div class="question-content">
     <div class="content-container">
+      <!-- History Dots (previous attempts) - moved to top -->
+      <HistoryDots :history="history" />
+
       <!-- Timer -->
       <Timer :elapsed-time="elapsedTime" />
-      
+
       <!-- Question (e.g., "7 × 8") -->
       <QuestionDisplay :n="n" :m="m" />
-      
+
       <!-- Answer (e.g., "= 56") -->
       <AnswerDisplay :answer="answer" />
-      
-      <!-- History Dots (previous attempts) -->
-      <HistoryDots :history="history" />
     </div>
   </div>
 </template>

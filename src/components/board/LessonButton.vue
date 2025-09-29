@@ -5,7 +5,7 @@
     :disabled="disabled"
     type="button"
   >
-    <span class="font-bold text-lg">Start Lesson (10 Questions)</span>
+    <span class="font-bold text-2xl">Start Lesson (10 Questions)</span>
   </button>
 </template>
 
@@ -30,8 +30,8 @@ const buttonClasses = computed(() => {
     'flex',
     'items-center',
     'justify-center',
-    'px-6',
-    'py-4',
+    'px-8',
+    'py-6',
     'rounded-lg',
     'text-white',
     'font-semibold',
