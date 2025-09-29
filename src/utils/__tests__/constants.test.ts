@@ -11,9 +11,10 @@ import {
 describe('constants', () => {
   it('should have correct time thresholds', () => {
     expect(TIME_THRESHOLDS.EXCELLENT).toBe(3)
-    expect(TIME_THRESHOLDS.GOOD).toBe(5)
-    expect(TIME_THRESHOLDS.OKAY).toBe(10)
-    expect(TIME_THRESHOLDS.VERY_SLOW).toBe(20)
+    expect(TIME_THRESHOLDS.GREAT).toBe(6)
+    expect(TIME_THRESHOLDS.GOOD).toBe(10)
+    expect(TIME_THRESHOLDS.OK).toBe(15)
+    expect(TIME_THRESHOLDS.SLOW).toBe(Infinity)
   })
 
   it('should have all performance colors defined', () => {
@@ -29,9 +30,9 @@ describe('constants', () => {
     expect(SELECTION_WEIGHTS.BASE).toBe(1)
     expect(SELECTION_WEIGHTS.NOT_ASKED).toBe(3)
     expect(SELECTION_WEIGHTS.WRONG_ANSWER).toBe(2)
-    expect(SELECTION_WEIGHTS.VERY_SLOW).toBe(3)
-    expect(SELECTION_WEIGHTS.SLOW).toBe(2)
-    expect(SELECTION_WEIGHTS.OKAY).toBe(1)
+    expect(SELECTION_WEIGHTS.SLOW).toBe(3)
+    expect(SELECTION_WEIGHTS.OK).toBe(2)
+    expect(SELECTION_WEIGHTS.GOOD).toBe(1)
   })
 
   it('should have correct multiplication range', () => {

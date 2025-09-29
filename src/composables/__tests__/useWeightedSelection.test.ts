@@ -22,19 +22,24 @@ describe('useWeightedSelection', () => {
       expect(calculateWeight(stats)).toBe(5) // Base (1) + Wrong answers (2*2)
     })
 
-    it('should add weight for slow answers', () => {
-      const stats: QuestionStats = { times: [6.0, 7.0], wrongCount: 0, asked: true }
-      expect(calculateWeight(stats)).toBe(2) // Base (1) + Okay speed (1)
+    it('should add weight for good answers (6-10s)', () => {
+      const stats: QuestionStats = { times: [7.0, 8.0], wrongCount: 0, asked: true }
+      expect(calculateWeight(stats)).toBe(2) // Base (1) + Good speed (1)
     })
 
-    it('should add weight for very slow answers', () => {
-      const stats: QuestionStats = { times: [25.0, 30.0], wrongCount: 0, asked: true, history: [] }
-      expect(calculateWeight(stats)).toBe(4) // Base (1) + Very slow (3)
+    it('should add weight for ok answers (10-15s)', () => {
+      const stats: QuestionStats = { times: [12.0, 13.0], wrongCount: 0, asked: true, history: [] }
+      expect(calculateWeight(stats)).toBe(3) // Base (1) + Ok speed (2)
+    })
+
+    it('should add weight for slow answers (15+s)', () => {
+      const stats: QuestionStats = { times: [20.0, 25.0], wrongCount: 0, asked: true, history: [] }
+      expect(calculateWeight(stats)).toBe(4) // Base (1) + Slow speed (3)
     })
 
     it('should combine multiple weight factors', () => {
       const stats: QuestionStats = { times: [12.0], wrongCount: 1, asked: true }
-      // Base (1) + Wrong answer (2) + Slow (2) = 5
+      // Base (1) + Wrong answer (2) + Ok speed (2) = 5
       expect(calculateWeight(stats)).toBe(5)
     })
 

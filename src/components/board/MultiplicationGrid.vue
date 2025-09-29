@@ -37,7 +37,7 @@
             size="small"
             :interactive="true"
             :show-tooltip="false"
-            display-mode="time"
+            :display-mode="getQuestionDisplayMode(n, m)"
             @click="handleQuestionClick(n, m)"
           />
         </template>
@@ -97,6 +97,11 @@ function getQuestionWrongCount(n: number, m: number): number {
 function getQuestionAsked(n: number, m: number): boolean {
   const question = getQuestionData(n, m)
   return question?.asked ?? false
+}
+
+function getQuestionDisplayMode(n: number, m: number): 'time' | 'wrong' {
+  const question = getQuestionData(n, m)
+  return question?.displayMode ?? 'time'
 }
 
 function handleQuestionClick(n: number, m: number) {

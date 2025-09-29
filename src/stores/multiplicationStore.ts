@@ -29,6 +29,7 @@ export interface QuestionWithStats extends Question {
   avgTime: number | null
   color: string
   weight: number
+  displayMode: 'time' | 'wrong'
 }
 
 export interface LessonProgress {
@@ -71,64 +72,112 @@ export const useMultiplicationStore = defineStore('multiplication', () => {
   function getAverageTime(n: number, m: number): number | null {
     const questionStats = getQuestionStats(n, m)
     if (questionStats.times.length === 0) return null
-    
+
     const recentTimes = questionStats.times.slice(-MAX_STORED_TIMES)
     return recentTimes.reduce((sum, time) => sum + time, 0) / recentTimes.length
   }
 
+  function getLastAnswerType(n: number, m: number): 'correct' | 'wrong' | null {
+    const questionStats = getQuestionStats(n, m)
+    if (!questionStats.history || questionStats.history.length === 0) return null
+
+    const lastAttempt = questionStats.history[questionStats.history.length - 1]
+    return lastAttempt.type
+  }
+
+  function getAverageFromLast5(n: number, m: number): number | null {
+    const questionStats = getQuestionStats(n, m)
+    if (!questionStats.history || questionStats.history.length === 0) return null
+
+    // Get last 5 attempts
+    const last5Attempts = questionStats.history.slice(-5)
+
+    // Filter only correct answers from last 5 attempts
+    const correctTimes = last5Attempts
+      .filter(attempt => attempt.type === 'correct' && attempt.time !== null)
+      .map(attempt => attempt.time!)
+
+    // If no correct answers in last 5 attempts, return null
+    if (correctTimes.length === 0) return null
+
+    // Calculate average from correct answers in last 5 attempts
+    return correctTimes.reduce((sum, time) => sum + time, 0) / correctTimes.length
+  }
+
   function getColor(n: number, m: number): string {
     const questionStats = getQuestionStats(n, m)
-    
+
     if (!questionStats.asked) return PERFORMANCE_COLORS.GREY
-    
+
     // If has wrong answers but no correct times, show red
     if (questionStats.wrongCount > 0 && questionStats.times.length === 0) {
       return PERFORMANCE_COLORS.RED
     }
-    
+
     const avgTime = getAverageTime(n, m)
     if (avgTime === null) return PERFORMANCE_COLORS.GREY
-    
-    if (avgTime <= TIME_THRESHOLDS.EXCELLENT) return PERFORMANCE_COLORS.GREEN
-    if (avgTime <= TIME_THRESHOLDS.GOOD) return PERFORMANCE_COLORS.LIME
-    if (avgTime <= TIME_THRESHOLDS.OKAY) return PERFORMANCE_COLORS.YELLOW
-    // Even very slow correct answers are yellow, not red
-    return PERFORMANCE_COLORS.YELLOW
+
+    // Color based on new thresholds
+    if (avgTime <= TIME_THRESHOLDS.EXCELLENT) return PERFORMANCE_COLORS.GREEN    // 0-3s - Excellent
+    if (avgTime <= TIME_THRESHOLDS.GREAT) return PERFORMANCE_COLORS.EMERALD      // 3-6s - Great!
+    if (avgTime <= TIME_THRESHOLDS.GOOD) return PERFORMANCE_COLORS.LIME          // 6-10s - Good
+    if (avgTime <= TIME_THRESHOLDS.OK) return PERFORMANCE_COLORS.YELLOW          // 10-15s - Ok
+    return PERFORMANCE_COLORS.ORANGE                                              // 15+s - Slow
   }
 
   function getSelectionWeight(n: number, m: number): number {
     const questionStats = getQuestionStats(n, m)
     let weight = SELECTION_WEIGHTS.BASE
-    
+
     // Not yet asked
     if (!questionStats.asked) {
       weight += SELECTION_WEIGHTS.NOT_ASKED
     }
-    
+
     // Wrong answers
     weight += questionStats.wrongCount * SELECTION_WEIGHTS.WRONG_ANSWER
-    
-    // Slow answers
+
+    // Slow answers based on new thresholds
     const avgTime = getAverageTime(n, m)
     if (avgTime !== null) {
-      if (avgTime > TIME_THRESHOLDS.VERY_SLOW) {
-        weight += SELECTION_WEIGHTS.VERY_SLOW
-      } else if (avgTime > TIME_THRESHOLDS.OKAY) {
+      if (avgTime > TIME_THRESHOLDS.OK) {        // >15s - Slow
         weight += SELECTION_WEIGHTS.SLOW
-      } else if (avgTime > TIME_THRESHOLDS.GOOD) {
-        weight += SELECTION_WEIGHTS.OKAY
+      } else if (avgTime > TIME_THRESHOLDS.GOOD) { // >10s - Ok
+        weight += SELECTION_WEIGHTS.OK
+      } else if (avgTime > TIME_THRESHOLDS.GREAT) { // >6s - Good
+        weight += SELECTION_WEIGHTS.GOOD
       }
     }
-    
+
     return weight
   }
 
   const getAllQuestionsWithStats = computed((): QuestionWithStats[] => {
     const questions: QuestionWithStats[] = []
-    
+
     for (let n = MULTIPLICATION_RANGE.MIN; n <= MULTIPLICATION_RANGE.MAX; n++) {
       for (let m = MULTIPLICATION_RANGE.MIN; m <= MULTIPLICATION_RANGE.MAX; m++) {
         const questionStats = getQuestionStats(n, m)
+        const lastAnswerType = getLastAnswerType(n, m)
+
+        // Determine what to display based on last answer
+        let avgTime: number | null = null
+        let displayMode: 'time' | 'wrong' = 'time'
+
+        if (lastAnswerType === 'wrong') {
+          // Last answer was wrong - show red X
+          displayMode = 'wrong'
+          avgTime = null
+        } else if (lastAnswerType === 'correct') {
+          // Last answer was correct - show average from last 5
+          displayMode = 'time'
+          avgTime = getAverageFromLast5(n, m)
+        } else {
+          // No history - use old logic (average of all times)
+          displayMode = 'time'
+          avgTime = getAverageTime(n, m)
+        }
+
         questions.push({
           n,
           m,
@@ -136,13 +185,14 @@ export const useMultiplicationStore = defineStore('multiplication', () => {
           times: questionStats.times,
           wrongCount: questionStats.wrongCount,
           asked: questionStats.asked,
-          avgTime: getAverageTime(n, m),
+          avgTime,
           color: getColor(n, m),
-          weight: getSelectionWeight(n, m)
+          weight: getSelectionWeight(n, m),
+          displayMode
         })
       }
     }
-    
+
     return questions
   })
 

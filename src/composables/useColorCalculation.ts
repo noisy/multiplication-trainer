@@ -21,12 +21,12 @@ export function useColorCalculation() {
     const averageTime = avgTime ?? calculateAverageTime(stats.times)
     if (averageTime === null) return PERFORMANCE_COLORS.GREY
 
-    // Color based only on correct answer times
-    if (averageTime <= TIME_THRESHOLDS.EXCELLENT) return PERFORMANCE_COLORS.GREEN
-    if (averageTime <= TIME_THRESHOLDS.GOOD) return PERFORMANCE_COLORS.LIME
-    if (averageTime <= TIME_THRESHOLDS.OKAY) return PERFORMANCE_COLORS.YELLOW
-    // Even very slow correct answers (>20s) are still yellow, not red
-    return PERFORMANCE_COLORS.YELLOW
+    // Color based on correct answer times with new thresholds
+    if (averageTime <= TIME_THRESHOLDS.EXCELLENT) return PERFORMANCE_COLORS.GREEN    // 0-3s - Excellent
+    if (averageTime <= TIME_THRESHOLDS.GREAT) return PERFORMANCE_COLORS.EMERALD      // 3-6s - Great!
+    if (averageTime <= TIME_THRESHOLDS.GOOD) return PERFORMANCE_COLORS.LIME          // 6-10s - Good
+    if (averageTime <= TIME_THRESHOLDS.OK) return PERFORMANCE_COLORS.YELLOW          // 10-15s - Ok
+    return PERFORMANCE_COLORS.ORANGE                                                  // 15+s - Slow
   }
 
   function formatTime(seconds: number): string {
@@ -36,10 +36,11 @@ export function useColorCalculation() {
   function getColorName(color: string): string {
     switch (color) {
       case PERFORMANCE_COLORS.GREY: return 'Not attempted'
-      case PERFORMANCE_COLORS.GREEN: return 'Excellent (≤3s)'
-      case PERFORMANCE_COLORS.LIME: return 'Good (≤5s)'
-      case PERFORMANCE_COLORS.YELLOW: return 'Okay (≤10s) or slow'
-      case PERFORMANCE_COLORS.ORANGE: return 'Slow (≤15s)'
+      case PERFORMANCE_COLORS.GREEN: return 'Excellent (0-3s)'
+      case PERFORMANCE_COLORS.EMERALD: return 'Great! (3-6s)'
+      case PERFORMANCE_COLORS.LIME: return 'Good (6-10s)'
+      case PERFORMANCE_COLORS.YELLOW: return 'Ok (10-15s)'
+      case PERFORMANCE_COLORS.ORANGE: return 'Slow (15+s)'
       case PERFORMANCE_COLORS.RED: return 'Wrong answers'
       default: return 'Unknown'
     }

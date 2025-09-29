@@ -22,15 +22,15 @@ export function useWeightedSelection() {
     // Wrong answers
     weight += stats.wrongCount * SELECTION_WEIGHTS.WRONG_ANSWER
     
-    // Slow answers
+    // Slow answers based on new thresholds
     const averageTime = avgTime ?? calculateAverageTime(stats.times)
     if (averageTime !== null) {
-      if (averageTime > TIME_THRESHOLDS.VERY_SLOW) {
-        weight += SELECTION_WEIGHTS.VERY_SLOW
-      } else if (averageTime > TIME_THRESHOLDS.OKAY) {
+      if (averageTime > TIME_THRESHOLDS.OK) {        // >15s - Slow
         weight += SELECTION_WEIGHTS.SLOW
-      } else if (averageTime > TIME_THRESHOLDS.GOOD) {
-        weight += SELECTION_WEIGHTS.OKAY
+      } else if (averageTime > TIME_THRESHOLDS.GOOD) { // >10s - Ok
+        weight += SELECTION_WEIGHTS.OK
+      } else if (averageTime > TIME_THRESHOLDS.GREAT) { // >6s - Good
+        weight += SELECTION_WEIGHTS.GOOD
       }
     }
     

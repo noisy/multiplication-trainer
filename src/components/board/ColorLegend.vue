@@ -1,7 +1,7 @@
 <template>
   <div class="app-card p-2">
     <h3 class="text-lg font-semibold text-gray-800 mb-3">Performance Legend</h3>
-    <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+    <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-7">
       <LegendItem
         v-for="item in legendItems"
         :key="item.label"
@@ -30,17 +30,27 @@ const legendItems = computed(() => [
   {
     color: PERFORMANCE_COLORS.GREEN,
     label: 'Excellent',
-    example: '≤3s'
+    example: '0-3s'
+  },
+  {
+    color: PERFORMANCE_COLORS.EMERALD,
+    label: 'Great!',
+    example: '3-6s'
   },
   {
     color: PERFORMANCE_COLORS.LIME,
     label: 'Good',
-    example: '≤5s'
+    example: '6-10s'
   },
   {
     color: PERFORMANCE_COLORS.YELLOW,
-    label: 'Okay or slow',
-    example: '≤10s or >10s'
+    label: 'Ok',
+    example: '10-15s'
+  },
+  {
+    color: PERFORMANCE_COLORS.ORANGE,
+    label: 'Slow',
+    example: '15+s'
   },
   {
     color: PERFORMANCE_COLORS.RED,
