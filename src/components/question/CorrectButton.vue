@@ -1,6 +1,6 @@
 <template>
   <button
-    :class="buttonClasses"
+    class="correct-button"
     @click="handleClick"
     :disabled="disabled"
     type="button"
@@ -8,7 +8,7 @@
   >
     <!-- Checkmark Icon -->
     <svg
-      class="w-16 h-16"
+      class="button-icon"
       fill="none"
       stroke="currentColor"
       viewBox="0 0 24 24"
@@ -17,7 +17,7 @@
       <path
         stroke-linecap="round"
         stroke-linejoin="round"
-        stroke-width="3"
+        stroke-width="2.5"
         d="M5 13l4 4L19 7"
       />
     </svg>
@@ -25,8 +25,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-
 interface Props {
   disabled?: boolean
 }
@@ -39,20 +37,6 @@ const emit = defineEmits<{
   click: []
 }>()
 
-const buttonClasses = computed(() => [
-  'flex items-center justify-center',
-  'w-32 h-32',
-  'text-white font-semibold',
-  'rounded-3xl',
-  'transition-all duration-200',
-  'touch-manipulation',
-  'shadow-xl',
-  'border-4',
-  props.disabled
-    ? 'cursor-not-allowed opacity-50'
-    : 'hover:shadow-2xl active:scale-90'
-])
-
 function handleClick() {
   if (!props.disabled) {
     emit('click')
@@ -61,29 +45,84 @@ function handleClick() {
 </script>
 
 <style scoped>
-button {
-  background-color: #22c55e !important; /* green-500 */
-  border-color: #16a34a !important; /* green-600 */
+.correct-button {
+  /* Size and layout */
+  width: 140px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Styling */
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  border: 4px solid #15803d;
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(34, 197, 94, 0.3),
+              0 4px 16px rgba(0, 0, 0, 0.1),
+              inset 0 2px 4px rgba(255, 255, 255, 0.2);
+
+  /* Animation */
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateY(0);
+
+  /* Touch */
+  touch-action: manipulation;
+  cursor: pointer;
 }
 
-button:hover {
-  background-color: #16a34a !important; /* green-600 */
-  border-color: #15803d !important; /* green-700 */
+.correct-button:hover {
+  background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+  border-color: #166534;
+  box-shadow: 0 12px 40px rgba(34, 197, 94, 0.4),
+              0 6px 20px rgba(0, 0, 0, 0.15),
+              inset 0 2px 4px rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
 }
 
-button:active {
-  background-color: #15803d !important; /* green-700 */
+.correct-button:active {
+  background: linear-gradient(135deg, #15803d 0%, #166534 100%);
+  box-shadow: 0 4px 16px rgba(34, 197, 94, 0.2),
+              0 2px 8px rgba(0, 0, 0, 0.1),
+              inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  transform: translateY(1px) scale(0.98);
 }
 
-button:disabled {
-  background-color: #9ca3af !important; /* gray-400 */
-  border-color: #9ca3af !important; /* gray-400 */
-  transform: none !important;
+.correct-button:disabled {
+  background: linear-gradient(135deg, #9ca3af 0%, #6b7280 100%);
+  border-color: #6b7280;
+  box-shadow: 0 4px 16px rgba(156, 163, 175, 0.2);
+  cursor: not-allowed;
+  opacity: 0.6;
+  transform: translateY(0);
+}
+
+.button-icon {
+  width: 64px;
+  height: 64px;
+  color: white;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.correct-button:disabled .button-icon {
+  color: #d1d5db;
 }
 
 /* Focus styles for accessibility */
-button:focus {
-  outline: 2px solid #fbbf24;
-  outline-offset: 2px;
+.correct-button:focus {
+  outline: 3px solid #fbbf24;
+  outline-offset: 3px;
+}
+
+/* Mobile optimizations */
+@media (max-width: 640px) {
+  .correct-button {
+    width: 120px;
+    height: 120px;
+  }
+
+  .button-icon {
+    width: 56px;
+    height: 56px;
+  }
 }
 </style>

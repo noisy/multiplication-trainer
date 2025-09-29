@@ -41,7 +41,7 @@ function handleCorrectClick() {
 <style scoped>
 .answer-buttons {
   width: 100%;
-  padding: 2rem;
+  padding: 3rem 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -49,7 +49,7 @@ function handleCorrectClick() {
 
 .buttons-container {
   display: flex;
-  gap: 4rem;
+  gap: 5rem;
   justify-content: center;
   align-items: center;
 }
