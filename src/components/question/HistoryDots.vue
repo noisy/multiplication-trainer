@@ -1,7 +1,7 @@
 <template>
-  <div v-if="displayDots.length > 0" class="history-section">
+  <div class="history-section">
     <div class="history-header">
-      <h3 class="history-title">Recent Answers</h3>
+      <h3 class="history-title">Last 5 answers</h3>
     </div>
     <div class="dots-container">
       <StatusCircle
@@ -49,12 +49,15 @@ interface Props {
 
 const props = defineProps<Props>()
 
-// Transform history data for StatusCircle components
+// Transform history data for StatusCircle components - always show 5 dots
 const displayDots = computed(() => {
+  const maxDots = 5
+
   // Take only the last 5 attempts
-  const recentHistory = props.history.slice(-5)
-  
-  return recentHistory.map(attempt => {
+  const recentHistory = props.history.slice(-maxDots)
+
+  // Map actual history to dots
+  const actualDots = recentHistory.map(attempt => {
     if (attempt.type === 'correct' && attempt.time !== null) {
       return {
         avgTime: attempt.time,
@@ -72,6 +75,18 @@ const displayDots = computed(() => {
       }
     }
   })
+
+  // Fill remaining slots with empty grey dots
+  const emptyDotsCount = maxDots - actualDots.length
+  const emptyDots = Array(emptyDotsCount).fill(null).map(() => ({
+    avgTime: null,
+    wrongCount: 0,
+    asked: false,
+    displayMode: 'empty' as const
+  }))
+
+  // Return actual dots first, then empty dots
+  return [...actualDots, ...emptyDots]
 })
 </script>
 
