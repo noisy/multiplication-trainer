@@ -104,7 +104,7 @@ describe('StatusCircle', () => {
       }
     })
     
-    const tooltipText = wrapper.vm.tooltipText
+    const tooltipText = wrapper.vm.$el.getAttribute('title')
     expect(tooltipText).toContain('7×8')
     expect(tooltipText).toContain('Avg: 4.2s')
     expect(tooltipText).toContain('Wrong: 1')
@@ -120,7 +120,7 @@ describe('StatusCircle', () => {
       }
     })
     
-    const tooltipText = wrapper.vm.tooltipText
+    const tooltipText = wrapper.vm.$el.getAttribute('title')
     expect(tooltipText).toContain('3×4')
     expect(tooltipText).toContain('Not attempted')
   })
