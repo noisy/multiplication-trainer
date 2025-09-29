@@ -36,7 +36,7 @@
             :asked="getQuestionAsked(n, m)"
             size="small"
             :interactive="true"
-            :show-tooltip="true"
+            :show-tooltip="false"
             display-mode="time"
             @click="handleQuestionClick(n, m)"
           />
