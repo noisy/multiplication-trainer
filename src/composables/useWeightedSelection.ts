@@ -25,7 +25,7 @@ export function useWeightedSelection() {
     // Slow answers
     const averageTime = avgTime ?? calculateAverageTime(stats.times)
     if (averageTime !== null) {
-      if (averageTime > TIME_THRESHOLDS.SLOW) {
+      if (averageTime > TIME_THRESHOLDS.VERY_SLOW) {
         weight += SELECTION_WEIGHTS.VERY_SLOW
       } else if (averageTime > TIME_THRESHOLDS.OKAY) {
         weight += SELECTION_WEIGHTS.SLOW

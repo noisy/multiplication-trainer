@@ -15,6 +15,7 @@
         :answer="currentQuestion.answer"
         :elapsed-time="elapsedTime"
         :history="questionHistory"
+        :average-time="averageTime"
       />
 
       <!-- Answer Buttons - moved up from footer -->
@@ -31,11 +32,13 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useMultiplicationStore } from '../stores/multiplicationStore'
+import { useColorCalculation } from '../composables/useColorCalculation'
 import QuestionHeader from '../components/question/QuestionHeader.vue'
 import QuestionContent from '../components/question/QuestionContent.vue'
 import AnswerButtons from '../components/question/AnswerButtons.vue'
 
 const store = useMultiplicationStore()
+const { calculateAverageTime } = useColorCalculation()
 
 // Computed properties
 const currentQuestion = computed(() => store.currentQuestion)
@@ -73,6 +76,16 @@ const questionHistory = computed(() => {
 
   // Return last 5 attempts only
   return history.slice(-5)
+})
+
+// Get average time for current question (only from correct answers)
+const averageTime = computed(() => {
+  if (!currentQuestion.value) return null
+
+  const stats = store.getQuestionStats(currentQuestion.value.n, currentQuestion.value.m)
+  if (!stats || stats.times.length === 0) return null
+
+  return calculateAverageTime(stats.times)
 })
 
 // Event handlers

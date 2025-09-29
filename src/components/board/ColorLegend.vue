@@ -39,18 +39,13 @@ const legendItems = computed(() => [
   },
   {
     color: PERFORMANCE_COLORS.YELLOW,
-    label: 'Okay',
-    example: '≤10s'
-  },
-  {
-    color: PERFORMANCE_COLORS.ORANGE,
-    label: 'Slow',
-    example: '≤15s'
+    label: 'Okay or slow',
+    example: '≤10s or >10s'
   },
   {
     color: PERFORMANCE_COLORS.RED,
-    label: 'Very slow',
-    example: '>15s or wrong'
+    label: 'Wrong answers',
+    example: 'Incorrect'
   }
 ])
 </script>

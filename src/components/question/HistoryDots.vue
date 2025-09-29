@@ -2,6 +2,9 @@
   <div v-if="displayDots.length > 0" class="history-section">
     <div class="history-header">
       <h3 class="history-title">Recent Answers</h3>
+      <div v-if="averageTime !== null" class="average-time">
+        Avg: {{ formatTime(averageTime) }}
+      </div>
     </div>
     <div class="dots-container">
       <StatusCircle
@@ -22,6 +25,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import StatusCircle from '../shared/StatusCircle.vue'
+import { useColorCalculation } from '../../composables/useColorCalculation'
 
 interface HistoryAttempt {
   type: 'correct' | 'wrong'
@@ -30,9 +34,11 @@ interface HistoryAttempt {
 
 interface Props {
   history: HistoryAttempt[]
+  averageTime: number | null
 }
 
 const props = defineProps<Props>()
+const { formatTime } = useColorCalculation()
 
 // Transform history data for StatusCircle components
 const displayDots = computed(() => {
@@ -81,6 +87,13 @@ const displayDots = computed(() => {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin: 0;
+}
+
+.average-time {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #475569;
+  margin-top: 0.25rem;
 }
 
 .dots-container {

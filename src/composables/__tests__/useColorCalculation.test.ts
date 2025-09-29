@@ -53,14 +53,14 @@ describe('useColorCalculation', () => {
       expect(getPerformanceColor(stats)).toBe(PERFORMANCE_COLORS.YELLOW)
     })
 
-    it('should return orange for slow times (≤15s)', () => {
+    it('should return yellow for slow times (>10s)', () => {
       const stats: QuestionStats = { times: [12.0, 13.0, 15.0], wrongCount: 0, asked: true, history: [] }
-      expect(getPerformanceColor(stats)).toBe(PERFORMANCE_COLORS.ORANGE)
+      expect(getPerformanceColor(stats)).toBe(PERFORMANCE_COLORS.YELLOW)
     })
 
-    it('should return red for very slow times (>15s)', () => {
-      const stats: QuestionStats = { times: [16.0, 18.0, 20.0], wrongCount: 0, asked: true, history: [] }
-      expect(getPerformanceColor(stats)).toBe(PERFORMANCE_COLORS.RED)
+    it('should return yellow for very slow times (>20s) - not red', () => {
+      const stats: QuestionStats = { times: [25.0, 30.0, 40.0], wrongCount: 0, asked: true, history: [] }
+      expect(getPerformanceColor(stats)).toBe(PERFORMANCE_COLORS.YELLOW)
     })
 
     it('should use provided avgTime instead of calculating', () => {
@@ -82,9 +82,9 @@ describe('useColorCalculation', () => {
       expect(getColorName(PERFORMANCE_COLORS.GREY)).toBe('Not attempted')
       expect(getColorName(PERFORMANCE_COLORS.GREEN)).toBe('Excellent (≤3s)')
       expect(getColorName(PERFORMANCE_COLORS.LIME)).toBe('Good (≤5s)')
-      expect(getColorName(PERFORMANCE_COLORS.YELLOW)).toBe('Okay (≤10s)')
+      expect(getColorName(PERFORMANCE_COLORS.YELLOW)).toBe('Okay (≤10s) or slow')
       expect(getColorName(PERFORMANCE_COLORS.ORANGE)).toBe('Slow (≤15s)')
-      expect(getColorName(PERFORMANCE_COLORS.RED)).toBe('Very slow (>15s) or wrong')
+      expect(getColorName(PERFORMANCE_COLORS.RED)).toBe('Wrong answers')
       expect(getColorName('#unknown')).toBe('Unknown')
     })
   })

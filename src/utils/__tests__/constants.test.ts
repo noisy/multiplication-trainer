@@ -13,7 +13,7 @@ describe('constants', () => {
     expect(TIME_THRESHOLDS.EXCELLENT).toBe(3)
     expect(TIME_THRESHOLDS.GOOD).toBe(5)
     expect(TIME_THRESHOLDS.OKAY).toBe(10)
-    expect(TIME_THRESHOLDS.SLOW).toBe(15)
+    expect(TIME_THRESHOLDS.VERY_SLOW).toBe(20)
   })
 
   it('should have all performance colors defined', () => {

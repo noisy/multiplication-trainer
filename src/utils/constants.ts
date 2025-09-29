@@ -1,10 +1,10 @@
 // Time thresholds for performance colors (in seconds)
 export const TIME_THRESHOLDS = {
   EXCELLENT: 3,    // Green
-  GOOD: 5,         // Lime  
-  OKAY: 10,        // Yellow
-  SLOW: 15,        // Orange
-  // Above 15s or wrong = Red
+  GOOD: 5,         // Lime
+  OKAY: 10,        // Yellow (10-20s)
+  VERY_SLOW: 20,   // Yellow (above 20s, but still correct)
+  // Wrong answers = Red
 } as const
 
 // Performance colors

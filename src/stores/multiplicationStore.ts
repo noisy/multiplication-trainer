@@ -92,8 +92,8 @@ export const useMultiplicationStore = defineStore('multiplication', () => {
     if (avgTime <= TIME_THRESHOLDS.EXCELLENT) return PERFORMANCE_COLORS.GREEN
     if (avgTime <= TIME_THRESHOLDS.GOOD) return PERFORMANCE_COLORS.LIME
     if (avgTime <= TIME_THRESHOLDS.OKAY) return PERFORMANCE_COLORS.YELLOW
-    if (avgTime <= TIME_THRESHOLDS.SLOW) return PERFORMANCE_COLORS.ORANGE
-    return PERFORMANCE_COLORS.RED
+    // Even very slow correct answers are yellow, not red
+    return PERFORMANCE_COLORS.YELLOW
   }
 
   function getSelectionWeight(n: number, m: number): number {
@@ -111,7 +111,7 @@ export const useMultiplicationStore = defineStore('multiplication', () => {
     // Slow answers
     const avgTime = getAverageTime(n, m)
     if (avgTime !== null) {
-      if (avgTime > TIME_THRESHOLDS.SLOW) {
+      if (avgTime > TIME_THRESHOLDS.VERY_SLOW) {
         weight += SELECTION_WEIGHTS.VERY_SLOW
       } else if (avgTime > TIME_THRESHOLDS.OKAY) {
         weight += SELECTION_WEIGHTS.SLOW

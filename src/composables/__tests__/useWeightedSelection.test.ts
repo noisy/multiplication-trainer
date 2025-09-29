@@ -28,7 +28,7 @@ describe('useWeightedSelection', () => {
     })
 
     it('should add weight for very slow answers', () => {
-      const stats: QuestionStats = { times: [16.0, 18.0], wrongCount: 0, asked: true }
+      const stats: QuestionStats = { times: [25.0, 30.0], wrongCount: 0, asked: true, history: [] }
       expect(calculateWeight(stats)).toBe(4) // Base (1) + Very slow (3)
     })
 

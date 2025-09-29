@@ -2,7 +2,7 @@
   <div class="question-content">
     <div class="content-container">
       <!-- History Dots (previous attempts) - moved to top -->
-      <HistoryDots :history="history" />
+      <HistoryDots :history="history" :average-time="averageTime" />
 
       <!-- Timer -->
       <Timer :elapsed-time="elapsedTime" />
@@ -33,6 +33,7 @@ interface Props {
   answer: number
   elapsedTime: number
   history: HistoryAttempt[]
+  averageTime: number | null
 }
 
 defineProps<Props>()
