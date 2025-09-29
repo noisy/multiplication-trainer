@@ -32,13 +32,13 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useMultiplicationStore } from '../stores/multiplicationStore'
-import { useColorCalculation } from '../composables/useColorCalculation'
+import { useQuestionStats } from '../composables/useQuestionStats'
 import QuestionHeader from '../components/question/QuestionHeader.vue'
 import QuestionContent from '../components/question/QuestionContent.vue'
 import AnswerButtons from '../components/question/AnswerButtons.vue'
 
 const store = useMultiplicationStore()
-const { calculateAverageTime } = useColorCalculation()
+const { calculateAverageFromLast5 } = useQuestionStats()
 
 // Computed properties
 const currentQuestion = computed(() => store.currentQuestion)
@@ -78,14 +78,14 @@ const questionHistory = computed(() => {
   return history.slice(-5)
 })
 
-// Get average time for current question (only from correct answers)
+// Get average time for current question (only from last 5 attempts, only correct answers)
 const averageTime = computed(() => {
   if (!currentQuestion.value) return null
 
   const stats = store.getQuestionStats(currentQuestion.value.n, currentQuestion.value.m)
-  if (!stats || stats.times.length === 0) return null
+  if (!stats || !stats.history || stats.history.length === 0) return null
 
-  return calculateAverageTime(stats.times)
+  return calculateAverageFromLast5(stats.history)
 })
 
 // Event handlers
