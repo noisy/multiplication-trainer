@@ -2,9 +2,6 @@
   <div v-if="displayDots.length > 0" class="history-section">
     <div class="history-header">
       <h3 class="history-title">Recent Answers</h3>
-      <div v-if="averageTime !== null" class="average-time">
-        Avg: {{ formatTime(averageTime) }}
-      </div>
     </div>
     <div class="dots-container">
       <StatusCircle
@@ -19,13 +16,26 @@
         :display-mode="dot.displayMode"
       />
     </div>
+    <div v-if="averageTime !== null" class="average-time-section">
+      <div class="average-time-text">
+        Average correct answer time:
+        <StatusCircle
+          :avg-time="averageTime"
+          :wrong-count="0"
+          :asked="true"
+          size="medium"
+          :interactive="false"
+          :show-tooltip="false"
+          display-mode="time"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
 import StatusCircle from '../shared/StatusCircle.vue'
-import { useColorCalculation } from '../../composables/useColorCalculation'
 
 interface HistoryAttempt {
   type: 'correct' | 'wrong'
@@ -38,7 +48,6 @@ interface Props {
 }
 
 const props = defineProps<Props>()
-const { formatTime } = useColorCalculation()
 
 // Transform history data for StatusCircle components
 const displayDots = computed(() => {
@@ -89,11 +98,19 @@ const displayDots = computed(() => {
   margin: 0;
 }
 
-.average-time {
-  font-size: 0.75rem;
+.average-time-section {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.average-time-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
   font-weight: 500;
   color: #475569;
-  margin-top: 0.25rem;
 }
 
 .dots-container {
@@ -118,6 +135,11 @@ const displayDots = computed(() => {
   .history-title {
     font-size: 0.75rem;
   }
+
+  .average-time-text {
+    font-size: 0.75rem;
+    gap: 0.375rem;
+  }
 }
 
 /* Tablet and up */
@@ -132,6 +154,11 @@ const displayDots = computed(() => {
 
   .history-title {
     font-size: 1rem;
+  }
+
+  .average-time-text {
+    font-size: 1rem;
+    gap: 0.75rem;
   }
 }
 </style>
