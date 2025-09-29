@@ -8,7 +8,7 @@
   >
     <!-- Checkmark Icon -->
     <svg
-      class="w-6 h-6 mr-2"
+      class="w-8 h-8"
       fill="none"
       stroke="currentColor"
       viewBox="0 0 24 24"
@@ -17,11 +17,10 @@
       <path
         stroke-linecap="round"
         stroke-linejoin="round"
-        stroke-width="2"
+        stroke-width="3"
         d="M5 13l4 4L19 7"
       />
     </svg>
-    <span class="font-semibold">Correct</span>
   </button>
 </template>
 

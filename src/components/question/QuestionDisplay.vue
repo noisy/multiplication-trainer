@@ -20,7 +20,7 @@ defineProps<Props>()
 }
 
 .question-text {
-  font-size: 3rem;
+  font-size: 4rem;
   font-weight: 700;
   color: #2563eb; /* blue-600 */
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -30,21 +30,21 @@ defineProps<Props>()
 /* Mobile responsiveness */
 @media (max-width: 640px) {
   .question-text {
-    font-size: 2.5rem;
+    font-size: 3.5rem;
   }
 }
 
 /* Tablet */
 @media (min-width: 768px) {
   .question-text {
-    font-size: 3.5rem;
+    font-size: 5rem;
   }
 }
 
 /* Desktop */
 @media (min-width: 1024px) {
   .question-text {
-    font-size: 4rem;
+    font-size: 6rem;
   }
 }
 </style>

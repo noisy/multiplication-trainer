@@ -1,5 +1,8 @@
 <template>
-  <div v-if="displayDots.length > 0" class="history-dots">
+  <div v-if="displayDots.length > 0" class="history-section">
+    <div class="history-header">
+      <h3 class="history-title">Recent Answers</h3>
+    </div>
     <div class="dots-container">
       <StatusCircle
         v-for="(dot, index) in displayDots"
@@ -58,10 +61,26 @@ const displayDots = computed(() => {
 </script>
 
 <style scoped>
-.history-dots {
-  display: flex;
-  justify-content: center;
+.history-section {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  padding: 1rem;
   margin-bottom: 2rem;
+}
+
+.history-header {
+  text-align: center;
+  margin-bottom: 0.75rem;
+}
+
+.history-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0;
 }
 
 .dots-container {
@@ -77,9 +96,14 @@ const displayDots = computed(() => {
   .dots-container {
     gap: 0.375rem;
   }
-  
-  .history-dots {
+
+  .history-section {
     margin-bottom: 1.5rem;
+    padding: 0.75rem;
+  }
+
+  .history-title {
+    font-size: 0.75rem;
   }
 }
 
@@ -87,6 +111,14 @@ const displayDots = computed(() => {
 @media (min-width: 768px) {
   .dots-container {
     gap: 0.75rem;
+  }
+
+  .history-section {
+    padding: 1.25rem;
+  }
+
+  .history-title {
+    font-size: 1rem;
   }
 }
 </style>

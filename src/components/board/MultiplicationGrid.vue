@@ -124,10 +124,8 @@ function handleQuestionClick(n: number, m: number) {
   width: 28px;
   height: 28px;
   font-weight: 600;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   color: #374151;
-  background-color: #f3f4f6;
-  border-radius: 4px;
 }
 
 /* Responsive adjustments */
